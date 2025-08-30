@@ -1,5 +1,4 @@
-
-import 'package:deal_diver/features/home/models/deal.dart';
+import 'package:myapp/features/home/models/deal.dart';
 import 'package:flutter/material.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_text_styles.dart';
@@ -7,10 +6,8 @@ import '../screens/edit_deal_screen.dart';
 
 class DealCard extends StatelessWidget {
   final Deal deal;
-  final Function(Deal) onDealUpdated;
 
-
-  const DealCard({super.key, required this.deal, required this.onDealUpdated});
+  const DealCard({super.key, required this.deal});
 
   @override
   Widget build(BuildContext context) {
@@ -84,16 +81,13 @@ class DealCard extends StatelessWidget {
                       ),
                       IconButton(
                         icon: const Icon(Icons.edit),
-                        onPressed: () async {
-                          final updatedDeal = await Navigator.push(
+                        onPressed: () {
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => EditDealScreen(deal: deal),
                             ),
                           );
-                          if (updatedDeal != null) {
-                            onDealUpdated(updatedDeal);
-                          }
                         },
                       ),
                     ],

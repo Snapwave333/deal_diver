@@ -5,7 +5,7 @@ class FirestoreService {
 
   Stream<List<T>> documentsStream<T>({
     required String path,
-    required T fromMap(Map<String, dynamic> data, String documentId),
+    required T Function(Map<String, dynamic> data, String documentId) fromMap,
   }) {
     return _db.collection(path).snapshots().map((snapshot) => snapshot.docs
         .map((doc) => fromMap(doc.data(), doc.id))

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:deal_diver/features/home/providers/deal_provider.dart';
-import 'package:deal_diver/features/home/widgets/deal_card.dart';
-import 'package:deal_diver/app/theme/app_text_styles.dart';
+import 'package:myapp/features/home/providers/deal_provider.dart';
+import 'package:myapp/features/home/widgets/deal_card.dart';
+import 'package:myapp/app/theme/app_text_styles.dart';
+import './add_deal_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -37,6 +38,15 @@ class HomeScreen extends StatelessWidget {
             },
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddDealScreen()),
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

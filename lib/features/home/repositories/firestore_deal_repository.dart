@@ -1,4 +1,4 @@
-'''import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/deal.dart';
 import './deal_repository.dart';
 
@@ -26,4 +26,3 @@ class FirestoreDealRepository implements DealRepository {
     return _firestore.collection('deals').doc(id).delete();
   }
 }
-''
