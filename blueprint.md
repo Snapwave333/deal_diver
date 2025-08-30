@@ -1,36 +1,66 @@
 
-# Project Blueprint: Aurora AI
+# Blueprint: Deal Diver [v2.0]
 
-## Overview
+## 1. Overview & Vision
 
-Aurora AI is a Flutter-based application designed to help users find the best deals and promo codes for products. It leverages the Gemini AI model to perform targeted searches for new and used items, as well as to discover active promotional codes from various retailers. The application features a dynamic and visually appealing user interface with a distinctive gradient background and a clear, tab-based navigation system.
+Deal Diver is a premium deal discovery application, rebuilt from first principles to be visually stunning, highly performant, and scalable. It provides a seamless experience for finding product deals and promotional offers.
 
-## Style, Design, and Features
+**Design Philosophy:** The UI/UX follows a "Cyber-Noir" aesthetic. It combines a dark, textured background with vibrant neon accent colors (Electric Blue, Magenta) to create a futuristic and immersive feel. The layout is clean, responsive, and prioritizes intuitive user interaction with polished animations and effects.
 
-### Initial Version (v1)
+## 2. Architecture & Structure
 
-*   **UI/UX:**
-    *   **Theme:** Dark theme with a vibrant gradient background transitioning from teal to magenta to orange (`#013A40`, `#A62675`, `#F28705`).
-    *   **Typography:** The application is designed to use the 'Manrope' font (currently disabled as the font file is not available). The default font is used as a fallback.
-    *   **Layout:** A two-column layout featuring a fixed sidebar for navigation and a main content area. The layout can be switched from left-to-right to right-to-left.
-    *   **Navigation:** A tab-style navigation in the sidebar allows users to switch between different functionalities: "AI Analyst" (placeholder), "New Deals," "Used Deals," and "Promo Codes."
+The project uses a feature-first, layered architecture to ensure separation of concerns and maintainability.
 
-*   **Core Features:**
-    *   **API Key Management:** Users can securely save their Gemini API key using `shared_preferences`. The key is obscured in the input field.
-    *   **Deal Searching:**
-        *   **New Deals:** Users can search for new products from retail stores.
-        *   **Used Deals:** Users can search for used items, requiring a location for the search.
-    *   **Promo Code Discovery:** A dedicated tab to fetch and display currently popular promo codes.
-    *   **Dynamic Content Display:** Search results are displayed in the main content area as a list of stylized cards. Each card presents key information like product name, retailer, price, and a link to the deal.
-    *   **Clipboard Integration:** Users can easily copy coupon codes to their clipboard.
-    *   **URL Launcher:** "View Deal" buttons open the product URL in the user's default browser.
+*   **State Management:** `provider` is used for managing app-wide state, such as theme settings.
+*   **Dependencies:**
+    *   `provider`: For state management.
+    *   `google_fonts`: For rich, modern typography.
+*   **File Structure:**
+    ```
+    lib/
+    ├── main.dart             # App entry point, DI, and routing
+    |
+    ├── app/
+    │   ├── providers/
+    │   │   └── theme_provider.dart # Manages light/dark/system theme state
+    │   └── theme/
+    │       ├── app_theme.dart      # Defines ThemeData for light & dark modes
+    │       ├── app_colors.dart     # Centralized color palette
+    │       └── app_text_styles.dart# Centralized typography styles
+    |
+    ├── features/
+    │   ├── navigation/
+    │   │   └── main_navigation.dart # Host screen with BottomNavigationBar
+    │   │
+    │   ├── home/
+    │   │   ├── screens/home_screen.dart
+    │   │   └── widgets/deal_card.dart
+    │   │
+    │   ├── search/
+    │   │   └── screens/search_screen.dart
+    │   │
+    │   ├── favorites/
+    │   │   └── screens/favorites_screen.dart
+    │   │
+    │   └── settings/
+    │       └── screens/settings_screen.dart
+    |
+    └── core/
+        └── models/
+            └── deal.dart           # Data model for deals
+    ```
 
-*   **Architecture:**
-    *   **State Management:** The application uses `StatefulWidget` and `setState` for managing local component state, such as the active tab, search results, and loading indicators.
-    *   **API Integration:** It communicates with the Google Generative AI API (`generativelanguage.googleapis.com`) using the `http` package to fetch data from the `gemini-1.5-flash` model.
-    *   **Error Handling:** Includes a retry mechanism for API calls to handle potential network issues or model overloading, and displays user-friendly error messages.
+## 3. Current Implementation Plan
 
-## Current Plan
+**Phase 1: Foundation & Core UI (In Progress)**
 
-This section will be updated with the plan for the next set of requested changes.
-
+1.  **[COMPLETE]** Restructure project into the new feature-based architecture.
+2.  **[COMPLETE]** Implement the core color palette and typography styles.
+3.  **[COMPLETE]** Set up `ThemeProvider` for dynamic theme switching.
+4.  **[COMPLETE]** Define the master `ThemeData` for both dark and light modes.
+5.  **[COMPLETE]** Implement the main app entry point (`main.dart`).
+6.  **[COMPLETE]** Build the main navigation shell (`main_navigation.dart`) with a `BottomNavigationBar`.
+7.  **[IN PROGRESS]** Develop the `HomeScreen` with a mock data display.
+8.  **[IN PROGRESS]** Design and build the reusable `DealCard` widget with the Cyber-Noir aesthetic.
+9.  **[TODO]** Create placeholder screens for Search, Favorites, and Settings.
+10. **[TODO]** Implement the theme toggle functionality in the Settings screen.
