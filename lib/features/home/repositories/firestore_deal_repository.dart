@@ -6,9 +6,10 @@ class FirestoreDealRepository implements DealRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
-  Future<List<Deal>> getDeals() async {
-    final snapshot = await _firestore.collection('deals').get();
-    return snapshot.docs.map((doc) => Deal.fromMap(doc.data(), doc.id)).toList();
+  Stream<List<Deal>> getDeals() {
+    return _firestore.collection('deals').snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) => Deal.fromMap(doc.data(), doc.id)).toList();
+    });
   }
 
   @override

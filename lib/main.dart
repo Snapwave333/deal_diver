@@ -1,41 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:provider/provider.dart';
-import './app/providers/theme_provider.dart';
-import './app/theme/app_theme.dart';
-import './features/home/providers/deal_provider.dart';
-import './features/home/repositories/deal_repository.dart';
-import './features/navigation/main_navigation.dart';
+import 'package:myapp/firebase_options.dart';
+import 'package:myapp/app/app.dart';
+import 'package:myapp/features/iap/in_app_purchase_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  MobileAds.instance.initialize();
+  FacebookAudienceNetwork.init();
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => ThemeProvider()),
-        ChangeNotifierProvider(
-          create: (context) => DealProvider(DealRepository()),
-        ),
-      ],
-      child: const DealDiverApp(),
+    ChangeNotifierProvider(
+      create: (context) => InAppPurchaseProvider(),
+      child: const MyApp(),
     ),
   );
-}
-
-class DealDiverApp extends StatelessWidget {
-  const DealDiverApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
-        return MaterialApp(
-          title: 'Deal Diver',
-          themeMode: themeProvider.themeMode,
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          home: const MainNavigation(),
-          debugShowCheckedModeBanner: false,
-        );
-      },
-    );
-  }
 }

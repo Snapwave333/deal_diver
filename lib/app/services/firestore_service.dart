@@ -3,33 +3,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Stream<List<T>> documentsStream<T>({
+  Stream<List<T>> collectionStream<T>({
     required String path,
-    required T Function(Map<String, dynamic> data, String documentId) fromMap,
+    required T Function(Map<String, dynamic> data, String documentId) builder,
   }) {
-    return _db.collection(path).snapshots().map((snapshot) => snapshot.docs
-        .map((doc) => fromMap(doc.data(), doc.id))
+    final reference = _db.collection(path);
+    final snapshots = reference.snapshots();
+    return snapshots.map((snapshot) => snapshot.docs
+        .map((doc) => builder(doc.data(), doc.id))
         .toList());
   }
 
   Future<void> addDocument({
     required String path,
     required Map<String, dynamic> data,
-  }) async {
-    final collection = _db.collection(path);
-    await collection.add(data);
-  }
-
-  Future<void> updateDocument({
-    required String path,
-    required Map<String, dynamic> data,
-  }) async {
-    final docRef = _db.doc(path);
-    await docRef.update(data);
-  }
-
-  Future<void> deleteDocument({required String path}) async {
-    final docRef = _db.doc(path);
-    await docRef.delete();
+  }) {
+    final reference = _db.collection(path);
+    return reference.add(data);
   }
 }
