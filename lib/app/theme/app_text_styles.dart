@@ -22,7 +22,7 @@ class AppTextStyles {
         ),
         bodyMedium: GoogleFonts.manrope(
           fontSize: 16,
-          color: AppColors.white.withOpacity(0.8),
+          color: _colorWithOpacity(AppColors.white, 0.8),
         ),
         labelMedium: GoogleFonts.manrope(
           fontSize: 14,
@@ -34,13 +34,17 @@ class AppTextStyles {
   static List<Shadow> _createGlow(Color color) => [
         Shadow(
           blurRadius: 20.0,
-          color: color.withOpacity(0.8),
+          color: _colorWithOpacity(color, 0.8),
           offset: const Offset(0, 0),
         ),
         Shadow(
           blurRadius: 30.0,
-          color: color.withOpacity(0.6),
+          color: _colorWithOpacity(color, 0.6),
           offset: const Offset(0, 0),
         ),
       ];
+
+  static Color _colorWithOpacity(Color color, double opacity) {
+    return color.withOpacity(opacity);
+  }
 }

@@ -10,10 +10,10 @@ class EditDealScreen extends StatefulWidget {
   const EditDealScreen({super.key, required this.deal});
 
   @override
-  _EditDealScreenState createState() => _EditDealScreenState();
+  EditDealScreenState createState() => EditDealScreenState();
 }
 
-class _EditDealScreenState extends State<EditDealScreen> {
+class EditDealScreenState extends State<EditDealScreen> {
   final _formKey = GlobalKey<FormState>();
   late String _title;
   late String _description;

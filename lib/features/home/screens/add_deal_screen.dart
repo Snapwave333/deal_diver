@@ -7,10 +7,10 @@ class AddDealScreen extends StatefulWidget {
   const AddDealScreen({super.key});
 
   @override
-  _AddDealScreenState createState() => _AddDealScreenState();
+  AddDealScreenState createState() => AddDealScreenState();
 }
 
-class _AddDealScreenState extends State<AddDealScreen> {
+class AddDealScreenState extends State<AddDealScreen> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
