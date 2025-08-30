@@ -1,9 +1,16 @@
+
+import 'package:deal_diver/features/home/models/deal.dart';
 import 'package:flutter/material.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_text_styles.dart';
+import '../screens/edit_deal_screen.dart';
 
 class DealCard extends StatelessWidget {
-  const DealCard({super.key});
+  final Deal deal;
+  final Function(Deal) onDealUpdated;
+
+
+  const DealCard({super.key, required this.deal, required this.onDealUpdated});
 
   @override
   Widget build(BuildContext context) {
@@ -34,26 +41,25 @@ class DealCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Placeholder for an image
               Container(
                 height: 150,
                 decoration: BoxDecoration(
                   color: AppColors.darkBackground,
                   borderRadius: BorderRadius.circular(12),
-                  image: const DecorationImage(
-                    image: NetworkImage('https://picsum.photos/400/200'), // Placeholder
+                  image: DecorationImage(
+                    image: NetworkImage(deal.image),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
               const SizedBox(height: 16),
               Text(
-                'Futuristic Gadget Deal',
+                deal.title,
                 style: AppTextStyles.textTheme.titleMedium,
               ),
               const SizedBox(height: 8),
               Text(
-                'Save 50% on this amazing piece of tech. Limited time offer, dive into the deal now!',
+                deal.description,
                 style: AppTextStyles.textTheme.bodyMedium,
               ),
               const SizedBox(height: 16),
@@ -61,18 +67,36 @@ class DealCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '\$99.99', 
+                    '\$${deal.price.toStringAsFixed(2)}',
                     style: AppTextStyles.textTheme.headlineLarge?.copyWith(color: AppColors.secondary, shadows: [])
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Text('View Deal'),
                       ),
-                    ),
-                    child: const Text('View Deal'),
+                      IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () async {
+                          final updatedDeal = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditDealScreen(deal: deal),
+                            ),
+                          );
+                          if (updatedDeal != null) {
+                            onDealUpdated(updatedDeal);
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ],
               )
