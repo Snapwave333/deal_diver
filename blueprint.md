@@ -1,66 +1,31 @@
+# Project Blueprint
 
-# Blueprint: Deal Diver [v2.0]
+## Overview
 
-## 1. Overview & Vision
+This document outlines the architecture, design, and features of the Deal Diver application. It serves as a single source of truth for the project's structure and implementation details.
 
-Deal Diver is a premium deal discovery application, rebuilt from first principles to be visually stunning, highly performant, and scalable. It provides a seamless experience for finding product deals and promotional offers.
+## 1. Style and Design
 
-**Design Philosophy:** The UI/UX follows a "Cyber-Noir" aesthetic. It combines a dark, textured background with vibrant neon accent colors (Electric Blue, Magenta) to create a futuristic and immersive feel. The layout is clean, responsive, and prioritizes intuitive user interaction with polished animations and effects.
+The app uses a modern, clean design with a custom color palette. The theme is implemented with both light and dark modes, and the typography is handled by Google Fonts to ensure a consistent and readable user interface.
 
-## 2. Architecture & Structure
+*   **Color Palette:** The color scheme is based on the Coolors palette `e6eed6-dde2c6-bbc5aa-a72608-090c02`.
+*   **Theming:** The app uses a centralized `AppTheme` class with light and dark `ThemeData` objects. A `ThemeProvider` is used to manage the app's theme mode.
+*   **Typography:** The `google_fonts` package is used for custom fonts, with `Oswald`, `Roboto`, and `Open Sans` for different text styles.
 
-The project uses a feature-first, layered architecture to ensure separation of concerns and maintainability.
+## 2. Features
 
-*   **State Management:** `provider` is used for managing app-wide state, such as theme settings.
-*   **Dependencies:**
-    *   `provider`: For state management.
-    *   `google_fonts`: For rich, modern typography.
-*   **File Structure:**
-    ```
-    lib/
-    ├── main.dart             # App entry point, DI, and routing
-    |
-    ├── app/
-    │   ├── providers/
-    │   │   └── theme_provider.dart # Manages light/dark/system theme state
-    │   └── theme/
-    │       ├── app_theme.dart      # Defines ThemeData for light & dark modes
-    │       ├── app_colors.dart     # Centralized color palette
-    │       └── app_text_styles.dart# Centralized typography styles
-    |
-    ├── features/
-    │   ├── navigation/
-    │   │   └── main_navigation.dart # Host screen with BottomNavigationBar
-    │   │
-    │   ├── home/
-    │   │   ├── screens/home_screen.dart
-    │   │   └── widgets/deal_card.dart
-    │   │
-    │   ├── search/
-    │   │   └── screens/search_screen.dart
-    │   │
-    │   ├── favorites/
-    │   │   └── screens/favorites_screen.dart
-    │   │
-    │   └── settings/
-    │       └── screens/settings_screen.dart
-    |
-    └── core/
-        └── models/
-            └── deal.dart           # Data model for deals
-    ```
+### Implemented Features
 
-## 3. Current Implementation Plan
+*   **Theme Switching:** Users can switch between light, dark, and system theme modes.
+*   **Basic Navigation:** The app has a bottom navigation bar for switching between the Home, Favorites, Search, and Settings screens.
 
-**Phase 1: Foundation & Core UI (In Progress)**
+### Current Task: Implement Deal Repository
 
-1.  **[COMPLETE]** Restructure project into the new feature-based architecture.
-2.  **[COMPLETE]** Implement the core color palette and typography styles.
-3.  **[COMPLETE]** Set up `ThemeProvider` for dynamic theme switching.
-4.  **[COMPLETE]** Define the master `ThemeData` for both dark and light modes.
-5.  **[COMPLETE]** Implement the main app entry point (`main.dart`).
-6.  **[COMPLETE]** Build the main navigation shell (`main_navigation.dart`) with a `BottomNavigationBar`.
-7.  **[IN PROGRESS]** Develop the `HomeScreen` with a mock data display.
-8.  **[IN PROGRESS]** Design and build the reusable `DealCard` widget with the Cyber-Noir aesthetic.
-9.  **[TODO]** Create placeholder screens for Search, Favorites, and Settings.
-10. **[TODO]** Implement the theme toggle functionality in the Settings screen.
+I will implement a repository pattern for managing deals in the application. This will separate the data logic from the UI and prepare the app for backend integration with Firebase.
+
+**Plan:**
+
+1.  **Add Dependencies:** Add `cloud_firestore` and `firebase_core` to `pubspec.yaml`.
+2.  **Create Repository:** Create `lib/features/home/repositories/deal_repository.dart`.
+3.  **Create Firestore Service:** Create `lib/app/services/firestore_service.dart` to handle Firestore communication.
+4.  **Refactor UI:** Update the UI to use the new repository to manage deals.

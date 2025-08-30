@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './app/providers/theme_provider.dart';
 import './app/theme/app_theme.dart';
+import './features/home/providers/deal_provider.dart';
+import './features/home/repositories/deal_repository.dart';
 import './features/navigation/main_navigation.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(
+          create: (context) => DealProvider(DealRepository()),
+        ),
+      ],
       child: const DealDiverApp(),
     ),
   );
