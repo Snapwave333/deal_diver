@@ -8,8 +8,6 @@ class AdService {
 
   AdService._internal();
 
-  int _adCounter = 0;
-
   Widget getBannerAd() {
     final adProvider = _getAdProvider();
     return adProvider.getBannerAdWidget();
@@ -21,11 +19,6 @@ class AdService {
   }
 
   AdProvider _getAdProvider() {
-    _adCounter++;
-    if (_adCounter % 2 == 0) {
-      return AdFactory.getAdProvider(AdNetwork.GOOGLE);
-    } else {
-      return AdFactory.getAdProvider(AdNetwork.META);
-    }
+    return AdFactory.getAdProvider(AdNetwork.GOOGLE);
   }
 }

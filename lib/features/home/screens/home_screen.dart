@@ -6,6 +6,8 @@ import 'package:myapp/features/home/widgets/deal_card.dart';
 import 'package:myapp/app/theme/app_text_styles.dart';
 import './add_deal_screen.dart';
 import 'package:myapp/features/ads/ad_service.dart';
+import 'package:myapp/services/remote_config_service.dart';
+import 'package:myapp/features/home/widgets/promotional_banner.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,6 +15,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final adService = AdService();
+    final remoteConfigService = RemoteConfigService.instance;
 
     return Scaffold(
       appBar: AppBar(
@@ -21,38 +24,49 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: StreamBuilder<List<Deal>>(
-        stream: Provider.of<DealProvider>(context).dealsStream,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
+      body: Column(
+        children: [
+          if (remoteConfigService.isPromotionalBannerEnabled)
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
+              child: PromotionalBanner(),
+            ),
+          Expanded(
+            child: StreamBuilder<List<Deal>>(
+              stream: Provider.of<DealProvider>(context).dealsStream,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
 
-          final deals = snapshot.data ?? [];
+                final deals = snapshot.data ?? [];
 
-          if (deals.isEmpty) {
-            return const Center(child: Text('No deals available.'));
-          }
+                if (deals.isEmpty) {
+                  return const Center(child: Text('No deals available.'));
+                }
 
-          return ListView.builder(
-            padding: const EdgeInsets.all(16.0),
-            itemCount: deals.length + 1, // Add one for the ad
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return adService.getNativeAd();
-              }
-              final deal = deals[index - 1];
-              return DealCard(
-                key: ValueKey(deal.id),
-                deal: deal,
-              );
-            },
-          );
-        },
+                return ListView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  itemCount: deals.length + 1, // Add one for the ad
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return adService.getNativeAd();
+                    }
+                    final deal = deals[index - 1];
+                    return DealCard(
+                      key: ValueKey(deal.id),
+                      deal: deal,
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

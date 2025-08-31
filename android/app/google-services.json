@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "540287916912",
+    "project_id": "dealdiver-d2b6c",
+    "storage_bucket": "dealdiver-d2b6c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540287916912:android:d91568ac293c62db1c0db5",
+        "android_client_info": {
+          "package_name": "com.dealdiver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540287916912-qqehums3fru6e3kckdbu7a1btduvvtir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7dbWPxJMjstVERLysHao0vFtQhfN6SA0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540287916912-qqehums3fru6e3kckdbu7a1btduvvtir.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540287916912:android:0abee7ce67d761be1c0db5",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540287916912-qqehums3fru6e3kckdbu7a1btduvvtir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7dbWPxJMjstVERLysHao0vFtQhfN6SA0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540287916912-qqehums3fru6e3kckdbu7a1btduvvtir.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

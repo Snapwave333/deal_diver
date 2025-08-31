@@ -38,19 +38,18 @@ class InAppPurchaseService {
   }
 
   Future<void> _restorePurchases() async {
-    final QueryPurchaseDetailsResponse response = await _inAppPurchase.queryPastPurchases();
-    for (PurchaseDetails purchase in response.pastPurchases) {
-      if (purchase.productID == 'ad_free_unlock') {
-        _isAdFree = true;
-      }
-    }
+    await _inAppPurchase.restorePurchases();
   }
 
   void buyAdFreeUnlock() {
-    final ProductDetails productDetails = _products.firstWhere((product) => product.id == 'ad_free_unlock', orElse: () => null);
-    final PurchaseParam purchaseParam = PurchaseParam(productDetails: productDetails);
-    _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+    try {
+      final ProductDetails productDetails = _products.firstWhere((product) => product.id == 'ad_free_unlock');
+      final PurchaseParam purchaseParam = PurchaseParam(productDetails: productDetails);
+      _inAppPurchase.buyNonConsumable(purchaseParam: purchaseParam);
+    } catch (e) {
+      // Product not found, handle gracefully
     }
+  }
 
   void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
     purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
